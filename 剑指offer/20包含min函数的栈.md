@@ -1,4 +1,4 @@
-### 1二维数组中的查找
+### 20包含min函数的栈
 
 ##### 题目
 
@@ -61,38 +61,36 @@ min\_记录最小值
 
 通过stack和min\_来反推入栈元素
 
+时间O(1)空间O(1)
+
+然而却有一个致命的不足
+
+value-min\_的差值可能会发生溢出，比如一个是INT_MAX另一个是INT_MIN，
+
 ```python
 # -*- coding:utf-8 -*-
 class Solution:
     def __init__(self):
-        #stack存储入栈元素与最小值的差值
         self.stack = []
-        #top_记录最后一个插入的数
-        self.top_ = 0
-        #min_记录最小值
-        self.min_ = 0
+        self.top_ = None
+        self.min_ = None
     def push(self, node):
-        #初始化
+        # write code here
         if self.stack == []:
             self.min_ = node
-        #存储入栈元素与最小值的差值
         self.stack.append(node - self.min_)
-        #如果入栈元素比最小值要小则更新最小值
         if node < self.min_:
             self.min_ = node
-        #更新 top 的值
         self.top_ = node
 
     def pop(self):
         # write code here
         if self.stack:
-            #如果出栈的是最小值(体现为存储值为负)，则需要更新最小值
             if self.stack[-1] < 0:
                 self.min_ -= self.stack[-1]
             self.stack.pop()
-            #出栈需要更新 top 的值
             if self.stack != []:
-                self.top_ = self.min_ + (self.stack[-1] if self.stack[-1] > 0 else 0)
+                self.top_ = self.min_ + self.stack[-1]
 
     def top(self):
         return self.top_
